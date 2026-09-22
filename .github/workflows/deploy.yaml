@@ -1,0 +1,10 @@
+name : Step-1 Testing Pipeline Sms Deployemnet
+
+on: push
+
+jobs:
+    say-hello:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Testing Pipline
+            run: echo "Welcome to the CI/CD"
