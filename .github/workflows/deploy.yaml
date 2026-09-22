@@ -3,7 +3,7 @@ name : Step-1 Testing Pipeline Sms Deployemnet
 on: push
 
 jobs:
-    say-hello:
+    Testing-connection:
         runs-on: ubuntu-latest
         steps:
           - name: Testing Pipline
