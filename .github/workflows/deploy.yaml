@@ -1,4 +1,4 @@
-name : Step-1 Testing Pipeline Sms Deployemnet
+name : Step-1 Testing Pipeline Sms Deployement
 
 on: push
 
@@ -8,3 +8,5 @@ jobs:
         steps:
           - name: Testing Pipline
             run: echo "Welcome to the CI/CD"
+          - name: Connecting to pipline
+            run : echo "Connected "  
