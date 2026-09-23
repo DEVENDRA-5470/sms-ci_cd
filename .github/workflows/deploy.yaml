@@ -91,7 +91,7 @@ jobs:
 
             docker stop sms-frontend || true
             docker rm sms-frontend || true
-            docker run -d --name sms-frontend -p 80:5173 ${{secrets.DOCKERHUB_USERNAME}}/sms-backend:v${{github.run_number}}
+            docker run -d --name sms-frontend -p 80:5173 ${{secrets.DOCKERHUB_USERNAME}}/sms-frontend:v${{github.run_number}}
 
 
 
