@@ -115,11 +115,11 @@ export default function Dashboard() {
 
             <div>
               <h1 className="text-lg font-bold tracking-tight">
-                Edu<span className="text-indigo-600">Core</span>
+                Edu<span className="text-indigo-600">Core By IQ india</span>
               </h1>
 
               <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-                Management OS
+                Management Student
               </p>
             </div>
           </Link>
