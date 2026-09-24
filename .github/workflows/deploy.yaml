@@ -4,44 +4,14 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'backend/**'
-      - 'frontend/**'
 
 jobs:
-
-  # ==========================================
-  # STAGE 0: DETECT CHANGES
-  # ==========================================
-  detect-changes:
-    name: Detect Changed Folders
-    runs-on: ubuntu-latest
-    outputs:
-      backend_changed: ${{ steps.filter.outputs.backend }}
-      frontend_changed: ${{ steps.filter.outputs.frontend }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Check which folders changed
-        uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          filters: |
-            backend:
-              - 'backend/**'
-            frontend:
-              - 'frontend/**'
-
 
   # ==========================================
   # STAGE 1: LOGIN
   # ==========================================
   login:
     name: Docker Hub Login
-    needs: detect-changes
-    if: needs.detect-changes.outputs.backend_changed == 'true' || needs.detect-changes.outputs.frontend_changed == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -57,8 +27,7 @@ jobs:
   # ==========================================
   build-backend:
     name: Build and Push Backend
-    needs: [detect-changes, login]
-    if: needs.detect-changes.outputs.backend_changed == 'true'
+    needs: login
     runs-on: ubuntu-latest
 
     steps:
@@ -89,8 +58,7 @@ jobs:
   # ==========================================
   build-frontend:
     name: Build and Push Frontend
-    needs: [detect-changes, login]
-    if: needs.detect-changes.outputs.frontend_changed == 'true'
+    needs: login
     runs-on: ubuntu-latest
 
     steps:
@@ -121,8 +89,7 @@ jobs:
   # ==========================================
   deploy-database:
     name: Deploy MySQL Container
-    needs: [detect-changes, login]
-    if: needs.detect-changes.outputs.backend_changed == 'true'
+    needs: login
     runs-on: ubuntu-latest
 
     steps:
@@ -180,8 +147,7 @@ jobs:
   # ==========================================
   deploy-backend:
     name: Deploy Backend
-    needs: [detect-changes, build-backend, deploy-database]
-    if: needs.detect-changes.outputs.backend_changed == 'true'
+    needs: [build-backend, deploy-database]
     runs-on: ubuntu-latest
 
     steps:
@@ -230,8 +196,7 @@ jobs:
   # ==========================================
   deploy-frontend:
     name: Deploy Frontend
-    needs: [detect-changes, build-frontend]
-    if: needs.detect-changes.outputs.frontend_changed == 'true'
+    needs: [build-frontend, deploy-backend]
     runs-on: ubuntu-latest
 
     steps:
